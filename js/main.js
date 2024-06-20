@@ -1,107 +1,47 @@
-var menuIcon = document.querySelector('.menu-icon');
-var ul = document.querySelector('.ul');
+document.addEventListener('DOMContentLoaded', function() {
+    // Seleciona o ícone do menu e a lista ul
+    var menuIcon = document.querySelector('.menu-icon');
+    var ul = document.querySelector('.ul');
 
-
-menuIcon.addEventListener('click',()=>{
-     
-   
-
+    // Adiciona evento de clique ao ícone do menu
+    menuIcon.addEventListener('click', function() {
         if (ul.classList.contains('ativo')) {
             ul.classList.remove('ativo');
-        }else{
+        } else {
             ul.classList.add('ativo');
         }
-
-})
-
-function navegateToSection(sectionID){
-    
-}
-//função da barra de pesquisa 
-function search() {
-    var query = document.getElementById('search-bar').value.toLowerCase();
-    var results = document.getElementById('results');
-
-    // Simulação de uma base de dados
-    var data = [
-        'Arduino',
-        'Sensor de Proximidade',
-        'Bateria de Litio',
-        'Microcontrolador',
-        'Sensor Ultrassonico',
-        'Sensor de luz',
-        'Capacitor'
-    ];
-
-    var matches = data.filter(function(item) {
-        return item.toLowerCase().includes(query);
     });
 
-    results.innerHTML = '';
+    // Seleciona todos os botões "Ver detalhes"
+    var botoesDetalhes = document.querySelectorAll('.produto a[data-produto]');
 
-    if (matches.length > 0) {
-        matches.forEach(function(item) {
-            var div = document.createElement('div');
-            div.textContent = item;
-            results.appendChild(div);
+    // Adiciona um evento de clique a cada botão "Ver detalhes"
+    botoesDetalhes.forEach(function(botao) {
+        botao.addEventListener('click', function(e) {
+            e.preventDefault();
+            var produtoId = botao.getAttribute('data-produto');
+            var detalheProduto = document.getElementById('detalhes-produto');
+
+            // Aqui você deve configurar os detalhes específicos do produto com base no ID
+            var nomeProduto = botao.previousElementSibling.textContent.trim(); // Obtém o nome do produto
+            var descricaoProduto = botao.nextElementSibling.textContent.trim(); // Obtém a descrição do produto
+            var precoProduto = botao.nextElementSibling.nextElementSibling.textContent.trim(); // Obtém o preço do produto
+
+            // Atualiza os elementos no bloco de detalhes do produto
+            document.getElementById('details-name').textContent = nomeProduto;
+            document.getElementById('details-description').textContent = descricaoProduto;
+            document.getElementById('details-price').textContent = precoProduto;
+
+            // Esconde a lista de produtos e mostra o bloco de detalhes do produto
+            document.querySelector('.produtos').classList.add('hidden');
+            detalheProduto.classList.remove('hidden');
         });
-    } else {
-        results.innerHTML = 'Nenhum resultado encontrado.';
-    }
-}
-//Fim da função da barra de pesquisa
+    });
 
-
-// main.js
-
-let cartCount = 0;
-
-function addToCart(productName, productPrice) {
-    cartCount++;
-    document.getElementById('cart-count').textContent = cartCount;
-
-    // Aqui você pode adicionar a lógica para armazenar os itens do carrinho
-    // Pode ser usando localStorage, cookies ou enviando para o backend
-}
-
-// Função de pesquisa (apenas exemplo, você deve implementar a lógica)
-function search() {
-    const query = document.getElementById('search-bar').value;
-    alert('Você pesquisou por: ' + query);
-}
-
-           //formulario 
-           document.addEventListener('DOMContentLoaded', function() {
-            const contatoForm = document.getElementById('contatoForm');
-        
-            if (contatoForm) {
-                contatoForm.addEventListener('submit', function(event) {
-                    event.preventDefault();
-        
-                    const nome = document.getElementById('nome').value;
-                    const email = document.getElementById('email').value;
-                    const mensagem = document.getElementById('mensagem').value;
-        
-                    if (nome.trim() === '' || email.trim() === '' || mensagem.trim() === '') {
-                        alert('Por favor, preencha todos os campos.');
-                    } else {
-                        alert('Mensagem enviada com sucesso! Te retornaremos em até 48 horas!');
-                        contatoForm.reset();
-                    }
-                });
-            } else {
-                console.error('Elemento contatoForm não encontrado no DOM.');
-            }
-        });
-        
-    
-    
-    
-    
-
-
-
-  
-     
-      
-
+    // Adiciona um evento de clique ao botão "Voltar"
+    document.getElementById('voltar-produtos').addEventListener('click', function() {
+        // Esconde o bloco de detalhes do produto e mostra a lista de produtos
+        document.querySelector('.produtos').classList.remove('hidden');
+        document.getElementById('detalhes-produto').classList.add('hidden');
+    });
+});
